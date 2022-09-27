@@ -40,7 +40,7 @@ export const ShopItems: ShopItemsInterface = {
         thumbnail: "/assets/image-product-4-thumbnail.jpg",
       },
     ],
-    price: 125.0,
+    price: 250.00,
     discount: 0.5,
   },
 };

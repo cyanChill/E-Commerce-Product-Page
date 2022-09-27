@@ -7,12 +7,21 @@ interface CartContextInterface {
   addItem: (newItem: CartItem) => void;
   incrementItem: (itemId: string) => void;
   decrementItem: (itemId: string) => void;
+  removeItem: (itemId: string) => void;
 }
 
 const CartContext = createContext<CartContextInterface | null>(null);
 
+const DUMMY_ITEMS = [
+  {
+    id: "b1b2a9c5-5cdd-4857-b6dc-ce0def506b79",
+    quantity: 3,
+  },
+];
+
 const CartProvider = ({ children }: ProviderProps) => {
-  const [items, setItems] = useState<CartItem[]>([]);
+  // const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<CartItem[]>(DUMMY_ITEMS);
 
   const addItem = (newItem: CartItem) => {
     if (items.filter((item) => item.id === newItem.id)) {
@@ -52,9 +61,13 @@ const CartProvider = ({ children }: ProviderProps) => {
     });
   };
 
+  const removeItem = (itemId: string) => {
+    setItems((prev) => prev.filter((item) => item.id !== itemId));
+  };
+
   return (
     <CartContext.Provider
-      value={{ items, addItem, incrementItem, decrementItem }}
+      value={{ items, addItem, incrementItem, decrementItem, removeItem }}
     >
       {children}
     </CartContext.Provider>
