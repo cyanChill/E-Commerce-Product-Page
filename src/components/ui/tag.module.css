@@ -1,0 +1,8 @@
+.tag {
+  padding: 0.25em 0.5em;
+  font-weight: 700;
+  font-size: 0.85em;
+  color: hsl(var(--orange));
+  background-color: hsl(var(--pale-orange));
+  border-radius: 0.5em;
+}

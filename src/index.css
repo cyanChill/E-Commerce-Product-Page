@@ -48,6 +48,7 @@ p {
   font-size: 16px;
 }
 
+/* Custom button style */
 .button {
   padding: 0.5em 0.75em;
   font-size: 0.9em;
@@ -60,4 +61,9 @@ p {
 .button:hover{
   cursor: pointer;
   background-color: hsl(var(--orange) / 80%);
+}
+
+/* Assorted styling */
+.strike {
+  text-decoration: line-through;
 }

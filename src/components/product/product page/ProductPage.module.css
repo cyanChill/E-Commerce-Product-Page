@@ -1,0 +1,89 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  padding-block-start: 0;
+}
+
+.container > * {
+  flex: 1;
+}
+
+/* Product info container */
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+}
+
+/* Product header */
+.productHeader p {
+  margin-block: 0 0.5em;
+  font-weight: 700;
+  font-size: 0.75em;
+  text-transform: uppercase;
+  color: hsl(var(--orange));
+}
+
+.productHeader h1 {
+  margin-block: 0.5em 0;
+  font-size: 2.5em;
+}
+
+/* Descriptin styling */
+.description {
+  font-size: 0.9em;
+  line-height: 1.9;
+  color: hsl(var(--dark-grayish-blue));
+}
+
+/* Price styling */
+.price,
+.discountPrice > :first-child {
+  font-weight: 700;
+  font-size: 1.15em;
+  margin: 0;
+}
+
+.priceContainer {
+}
+
+.discountPrice {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.discountPrice > :first-child {
+  font-weight: 700;
+  font-size: 1.15em;
+  margin: 0;
+}
+
+/* Original price*/
+.discountPrice ~ .price {
+  font-weight: 400;
+  font-size: 0.8em;
+  color: hsl(var(--dark-grayish-blue));
+}
+
+/* Increment/Decrement Component + Add Cart */
+.action {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+.action > button {
+  flex: 1;
+}
+
+@media (min-width: 568px) {
+  .container {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2em;
+    padding: 2em;
+  }
+}

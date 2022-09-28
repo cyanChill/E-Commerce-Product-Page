@@ -1,16 +1,4 @@
-type ProductImageType = {
-  image: string;
-  thumbnail: string;
-};
-
-type ShopItemType = {
-  id: string;
-  name: string;
-  description: string;
-  productImages: ProductImageType[];
-  price: number;
-  discount: number;
-};
+import { ShopItemType } from "./util/types";
 
 interface ShopItemsInterface {
   [x: string]: ShopItemType;
@@ -40,7 +28,7 @@ export const ShopItems: ShopItemsInterface = {
         thumbnail: "/assets/image-product-4-thumbnail.jpg",
       },
     ],
-    price: 250.00,
+    price: 250.0,
     discount: 0.5,
   },
 };
