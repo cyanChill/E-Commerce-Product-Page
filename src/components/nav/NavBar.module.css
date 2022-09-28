@@ -1,34 +1,85 @@
 .container {
-  --y-padding: 2em;
+  --y-padding: 0.5em;
 
   width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
   display: flex;
   align-items: center;
-  gap: 2em;
+  gap: 1em;
 
-  padding: var(--y-padding) 1.5em;
+  padding: var(--y-padding) 1em;
 
   border-bottom: 0.01em solid hsl(var(--grayish-blue));
 }
 
-/* Logo Styles */
-.logo {
+/* Menu Control */
+.menuControl {
+  flex-shrink: 0;
+  width: 2em;
+  aspect-ratio: 1;
+  display: block;
+  z-index: 99999;
+  background-color: transparent;
+  background-image: url("/public/assets/icon-menu.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  border: none;
+  transition: background-image 350ms;
+}
+
+.menuControl:hover {
+  cursor: pointer;
+}
+
+.menuControl[data-expanded="true"] {
+  background-image: url("/public/assets/icon-close.svg");
 }
 
 /* Navigation Links Styles */
 .navLinks {
-  list-style: none;
+  z-index: 99998;
   display: flex;
+  flex-direction: column;
   gap: 1.5em;
 
-  font-size: 1.15em;
+  list-style: none;
   padding: 0;
   margin: 0;
+  background-color: hsl(var(--white));
+}
+
+@media (max-width: 568px) {
+  .navLinks {
+    z-index: 99998;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: max(15em, 60vw);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+
+    list-style: none;
+    font-size: 1.15em;
+    padding: 5em 2em;
+    margin: 0;
+    background-color: hsl(var(--white));
+    transform: translateX(-100%);
+    transition: transform 350ms;
+  }
+
+  .navLinks[data-expanded="true"] {
+    transform: translateX(0);
+  }
 }
 
 .navLinks a {
   position: relative;
-  color: hsl(var(--dark-grayish-blue));
+  font-weight: 700;
+  color: hsl(var(--black));
 }
 
 .navLinks a:hover {
@@ -36,14 +87,29 @@
   color: hsl(var(--black));
 }
 
-.navLinks a:hover:after {
-  content: "";
-  width: 100%;
-  height: 0.175em;
-  position: absolute;
+.backdrop {
+  position: fixed;
+  top: 0;
   left: 0;
-  bottom: calc(-1 * var(--y-padding) - 50%);
-  background-color: hsl(var(--orange));
+  height: 100%;
+  flex: 1;
+  width: 100vw;
+  background-color: hsl(var(--black) / 75%);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 350ms;
+  pointer-events: none;
+}
+
+.backdrop[data-expanded="true"] {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Logo Styles */
+.logo {
+  min-width: 0;
+  width: fit-content;
 }
 
 /* Right Actions */
@@ -56,9 +122,7 @@
 
 /* Avatar Styles */
 .avatar {
-  height: 3.25em;
-  width: 3.25em;
-
+  height: 2.5em;
   border: 0.15em solid transparent;
   border-radius: 50%;
   transition: border-color 300ms;
@@ -67,4 +131,90 @@
 .avatar:hover {
   cursor: pointer;
   border-color: hsl(var(--orange));
+}
+
+@media (min-width: 568px) {
+  .container {
+    --y-padding: 2em;
+  }
+
+  .menuControl,
+  .backdrop {
+    display: none;
+  }
+
+  .logo {
+    width: 104px;
+  }
+
+  .navLinks {
+    position: initial;
+    height: initial;
+    flex-direction: row;
+    padding: 0;
+  }
+
+  .navLinks a {
+    font-weight: 400;
+    color: hsl(var(--dark-grayish-blue));
+  }
+
+  .navLinks a:hover:after {
+    content: "";
+    width: 100%;
+    height: 0.175em;
+    position: absolute;
+    left: 0;
+    bottom: calc(-1 * var(--y-padding) - 50%);
+    background-color: hsl(var(--orange));
+  }
+
+  .avatar {
+    height: 2em;
+  }
+
+  .navLinks {
+    gap: clamp(0.9em, 1vw, 1em);
+    font-size: 1em;
+  }
+
+  .navLinks a:hover:after {
+    height: 0.175em;
+    bottom: calc(-1 * var(--y-padding) - 50% + 0.185em);
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    gap: 2em;
+    padding-inline: 1.5em;
+  }
+
+  .logo {
+    width: initial;
+  }
+
+  .avatar {
+    height: 2.5em;
+  }
+
+  .navLinks {
+    font-size: 1.15em;
+  }
+
+  .navLinks a:hover:after {
+    height: 0.165em;
+    bottom: calc(-1 * var(--y-padding) - 50% + 0.3em);
+  }
+}
+
+@media (min-width: 968px) {
+  .avatar {
+    height: 3.25em;
+  }
+
+  .navLinks a:hover:after {
+    height: 0.175em;
+    bottom: calc(-1 * var(--y-padding) - 50%);
+  }
 }

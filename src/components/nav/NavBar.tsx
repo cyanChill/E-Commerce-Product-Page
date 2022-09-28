@@ -1,28 +1,50 @@
+import { useState } from "react";
+
 import ShoppingCart from "./ShoppingCart";
 import styles from "./NavBar.module.css";
 
 const NavBar = () => {
+  const [open, setOpen] = useState(false);
+
   return (
     <nav className={styles.container}>
+      <button
+        className={styles.menuControl}
+        data-expanded={open}
+        onClick={() => setOpen((prev) => !prev)}
+      />
+      {/* Backdrop for mobile */}
+      <div className={styles.backdrop} data-expanded={open} />
+
       {/* Site Logo */}
       <img src="/assets/logo.svg" alt="site logo" className={styles.logo} />
 
       {/* Navigation Links */}
-      <ul className={styles.navLinks}>
+      <ul className={styles.navLinks} data-expanded={open}>
         <li>
-          <a href="/#">Collections</a>
+          <a href="/#" onClick={() => setOpen(false)}>
+            Collections
+          </a>
         </li>
         <li>
-          <a href="/#">Men</a>
+          <a href="/#" onClick={() => setOpen(false)}>
+            Men
+          </a>
         </li>
         <li>
-          <a href="/#">Women</a>
+          <a href="/#" onClick={() => setOpen(false)}>
+            Women
+          </a>
         </li>
         <li>
-          <a href="/#">About</a>
+          <a href="/#" onClick={() => setOpen(false)}>
+            About
+          </a>
         </li>
         <li>
-          <a href="/#">Contact</a>
+          <a href="/#" onClick={() => setOpen(false)}>
+            Contact
+          </a>
         </li>
       </ul>
 

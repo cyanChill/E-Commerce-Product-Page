@@ -22,10 +22,7 @@ const ShoppingCart = () => {
         <img src="/assets/icon-cart.svg" alt="shopping cart icon" />
       </div>
 
-      <div
-        className={`${styles.cartSummary} ${!visible ? styles.hidden : ""}`}
-        onBlur={() => setVisible(false)}
-      >
+      <div className={`${styles.cartSummary} ${!visible ? styles.hidden : ""}`}>
         <p>Cart</p>
         <hr />
         <div className={styles.cartItems}>
