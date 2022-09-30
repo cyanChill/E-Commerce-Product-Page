@@ -8,6 +8,7 @@
 /* Cart Icon Styles */
 .cartIcon {
   position: relative;
+  color: hsl(var(--dark-grayish-blue));
 }
 
 .cartIcon:hover {
@@ -112,9 +113,11 @@
 
 .delete {
   height: max-content;
+  color: hsl(var(--grayish-blue));
 }
 
 .delete:hover {
+  color: hsl(var(--dark-grayish-blue));
   cursor: pointer;
 }
 

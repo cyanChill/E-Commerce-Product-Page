@@ -24,7 +24,7 @@ const CartProvider = ({ children }: ProviderProps) => {
   const [items, setItems] = useState<CartItem[]>(DUMMY_ITEMS);
 
   const addItem = (newItem: CartItem) => {
-    if (items.filter((item) => item.id === newItem.id)) {
+    if (items.find((item) => item.id === newItem.id)) {
       // Add to existing item if "newItem" exists in cart
       setItems((prev) => {
         return prev.map((item) => {
@@ -36,7 +36,7 @@ const CartProvider = ({ children }: ProviderProps) => {
         });
       });
     } else {
-      setItems((prev) => [...prev, newItem]);
+      if (newItem.quantity !== 0) setItems((prev) => [...prev, newItem]);
     }
   };
 

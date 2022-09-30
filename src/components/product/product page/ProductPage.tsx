@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 
+import { ReactComponent as CartSVG } from "../../../assets/icon-cart.svg";
+import useCartContext from "../../../hooks/useCartContext";
 import { ShopItemType } from "../../../util/types";
 import Gallery from "../../image gallery/Gallery";
 import Tag from "../../ui/tag";
@@ -11,8 +13,17 @@ interface ProductPageInterface {
 }
 
 const ProductPage = ({ item }: ProductPageInterface) => {
+  const { addItem } = useCartContext();
+  const [value, setValue] = useState(0);
+
+  const updateQuantity = useCallback((val: number) => {
+    setValue(val);
+  }, []);
+
   const handleCartAddition = (e: React.FormEvent) => {
     e.preventDefault();
+    addItem({ id: item.id, quantity: value });
+    setValue(0);
   };
 
   return (
@@ -28,21 +39,21 @@ const ProductPage = ({ item }: ProductPageInterface) => {
         <p className={styles.description}>{item.description}</p>
 
         {item.discount === 0 ? (
-          <p className={styles.price}>${item.price}</p>
+          <p className={styles.price}>${item.price.toFixed(2)}</p>
         ) : (
           <div className={styles.priceContainer}>
             <div className={styles.discountPrice}>
               <p>${(item.price * item.discount).toFixed(2)}</p>
               <Tag discount={item.discount} />
             </div>
-            <p className={`strike ${styles.price}`}>${item.price}</p>
+            <p className={`strike ${styles.price}`}>${item.price.toFixed(2)}</p>
           </div>
         )}
 
         <form onSubmit={handleCartAddition} className={styles.action}>
-          <Crement />
-          <button className="button" type="submit">
-            Add to cart
+          <Crement value={value} onChange={updateQuantity} />
+          <button className={`button ${styles.btn}`} type="submit">
+            <CartSVG className={styles.svg} /> Add to cart
           </button>
         </form>
       </section>

@@ -1,5 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 
+import { ReactComponent as CartSVG } from "../../assets/icon-cart.svg";
+import { ReactComponent as DeleteSVG } from "../../assets/icon-delete.svg";
 import useCartContext from "../../hooks/useCartContext";
 import { ShopItems } from "../../DUMMY_DATA";
 import styles from "./ShoppingCart.module.css";
@@ -7,10 +9,36 @@ import styles from "./ShoppingCart.module.css";
 const ShoppingCart = () => {
   const { items, removeItem } = useCartContext();
   const [visible, setVisible] = useState(false);
+  const cartCtrlRef = useRef<HTMLDivElement | null>(null);
+  const cartSummRef = useRef<HTMLDivElement | null>(null);
 
   const totalItemQuantity = useMemo(() => {
     return items.reduce((prev, curr) => prev + curr.quantity, 0);
   }, [items]);
+
+  useEffect(() => {
+    const closeIfNotCart = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        !cartSummRef.current ||
+        !cartCtrlRef.current ||
+        !target ||
+        cartCtrlRef.current.contains(target as Node)
+      )
+        return;
+
+      if (!cartSummRef.current.contains(target as Node)) {
+        setVisible(false);
+      }
+    };
+    if (cartSummRef.current && cartCtrlRef.current) {
+      window.addEventListener("mousedown", closeIfNotCart);
+    }
+
+    return () => {
+      window.removeEventListener("mousedown", closeIfNotCart);
+    };
+  }, [cartSummRef, cartCtrlRef]);
 
   return (
     <div className={styles.container}>
@@ -18,11 +46,16 @@ const ShoppingCart = () => {
         className={styles.cartIcon}
         data-items={totalItemQuantity}
         onClick={() => setVisible((prev) => !prev)}
+        ref={cartCtrlRef}
       >
-        <img src="/assets/icon-cart.svg" alt="shopping cart icon" />
+        <CartSVG />
       </div>
 
-      <div className={`${styles.cartSummary} ${!visible ? styles.hidden : ""}`}>
+      <div
+        className={`${styles.cartSummary} ${!visible ? styles.hidden : ""}`}
+        data-visible={visible}
+        ref={cartSummRef}
+      >
         <p>Cart</p>
         <hr />
         <div className={styles.cartItems}>
@@ -52,9 +85,7 @@ const ShoppingCart = () => {
                       </p>
                     </div>
 
-                    <img
-                      src="/assets/icon-delete.svg"
-                      alt="remove cart item icon"
+                    <DeleteSVG
                       onClick={() => removeItem(item.id)}
                       className={styles.delete}
                     />
