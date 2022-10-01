@@ -2,7 +2,6 @@
   display: grid;
   grid-template-rows: max-content auto;
   grid-template-columns: 100%;
-  padding: 1em;
   padding-block-start: 0;
 }
 
@@ -12,7 +11,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 1em;
-  padding-block: 1.5em;
+  padding: 1.5em 1em;
 }
 
 /* Product header */
@@ -45,6 +44,9 @@
 }
 
 .priceContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .discountPrice {
@@ -109,6 +111,11 @@
 
   .productHeader h1 {
     font-size: 2.5em;
+  }
+
+  .priceContainer {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .action {

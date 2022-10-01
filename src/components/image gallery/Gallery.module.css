@@ -1,5 +1,6 @@
 /* Normal Styles */
 .container {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2em;
@@ -7,7 +8,6 @@
 
 .previewImg {
   width: 100%;
-  border-radius: 1em;
 }
 
 .previewImg[data-main="true"]:hover {
@@ -108,10 +108,18 @@
 
 .lbMainImg .previewImg {
   user-select: none;
+  border-radius: 1em;
+}
+
+@media (min-width: 568px) {
+  .previewImg {
+    border-radius: 1em;
+  }
 }
 
 /* For the svg buttons */
 .svgContainer {
+  --xAmount: 0%;
   position: absolute;
   top: 50%;
 
@@ -125,12 +133,11 @@
   color: hsl(var(--black));
   background-color: hsl(var(--white));
   border-radius: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(var(--xAmount), -50%);
 }
 
 .svgContainer[data-pos="right"] {
   right: 0;
-  transform: translate(50%, -50%);
 }
 
 .svgContainer > * {

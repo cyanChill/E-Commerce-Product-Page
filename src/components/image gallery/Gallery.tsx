@@ -19,6 +19,14 @@ const Gallery = ({ images }: GalleryInterface) => {
   const [selIdx, setSelIdx] = useState<number>(0);
   const [selImg, setSelImg] = useState<ProductImageType>(images[0]);
 
+  const handleValChange = (type: "inc" | "dec") => {
+    if (type === "inc") {
+      setSelIdx((prev) => (prev < images.length - 1 ? prev + 1 : prev));
+    } else {
+      setSelIdx((prev) => (prev !== 0 ? prev - 1 : prev));
+    }
+  };
+
   const closeLightBox = useCallback(() => setIsOpen(false), []);
 
   useEffect(() => {
@@ -35,11 +43,9 @@ const Gallery = ({ images }: GalleryInterface) => {
         isOpen={isOpen}
         setSelIdx={setSelIdx}
         closeHandler={closeLightBox}
+        navGallery={handleValChange}
       />
 
-      {/* Mobile View */}
-
-      {/* Normal view */}
       <div className={styles.container}>
         <img
           src={selImg?.image}
@@ -48,19 +54,42 @@ const Gallery = ({ images }: GalleryInterface) => {
           onClick={() => setIsOpen(true)}
           className={styles.previewImg}
         />
-
-        <div className={styles.imgOptions}>
-          {images.map((img, idx) => (
+        {/* Mobile View Shown in Mobile*/}
+        {isMobile && (
+          <>
             <div
-              className={`${styles.thumbnail} ${
-                idx === selIdx ? styles.selected : ""
-              }`}
-              onClick={() => setSelIdx(idx)}
+              className={styles.svgContainer}
+              onClick={() => handleValChange("dec")}
+              style={{ "--xAmount": "50%" } as React.CSSProperties}
             >
-              <img src={img.thumbnail} alt="" />
+              <PreviousSVG />
             </div>
-          ))}
-        </div>
+            <div
+              className={styles.svgContainer}
+              data-pos="right"
+              onClick={() => handleValChange("inc")}
+              style={{ "--xAmount": "-50%" } as React.CSSProperties}
+            >
+              <NextSVG />
+            </div>
+          </>
+        )}
+
+        {/* Normal view */}
+        {!isMobile && (
+          <div className={styles.imgOptions}>
+            {images.map((img, idx) => (
+              <div
+                className={`${styles.thumbnail} ${
+                  idx === selIdx ? styles.selected : ""
+                }`}
+                onClick={() => setSelIdx(idx)}
+              >
+                <img src={img.thumbnail} alt="" />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
@@ -74,6 +103,7 @@ interface LightBoxProps extends GalleryInterface {
   isOpen: boolean;
   setSelIdx: React.Dispatch<React.SetStateAction<number>>;
   closeHandler: () => void;
+  navGallery: (type: "inc" | "dec") => void;
 }
 
 const LightBox = ({
@@ -83,15 +113,8 @@ const LightBox = ({
   isOpen,
   setSelIdx,
   closeHandler,
+  navGallery: handleValChange,
 }: LightBoxProps) => {
-  const handleValChange = (type: "inc" | "dec") => {
-    if (type === "inc") {
-      setSelIdx((prev) => prev + 1);
-    } else {
-      setSelIdx((prev) => (prev !== 0 ? prev - 1 : prev));
-    }
-  };
-
   return createPortal(
     <div className={styles.lightbox} data-open={isOpen}>
       <div className={styles.lbBackdrop} />
@@ -103,6 +126,7 @@ const LightBox = ({
           <div
             className={styles.svgContainer}
             onClick={() => handleValChange("dec")}
+            style={{ "--xAmount": "-50%" } as React.CSSProperties}
           >
             <PreviousSVG />
           </div>
@@ -115,6 +139,7 @@ const LightBox = ({
             className={styles.svgContainer}
             data-pos="right"
             onClick={() => handleValChange("inc")}
+            style={{ "--xAmount": "50%" } as React.CSSProperties}
           >
             <NextSVG />
           </div>
