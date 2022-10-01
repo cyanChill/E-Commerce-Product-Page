@@ -152,7 +152,9 @@
     position: initial;
     height: initial;
     flex-direction: row;
+    gap: clamp(0.9em, 1vw, 1em);
     padding: 0;
+    font-size: 1em;
   }
 
   .navLinks a {
@@ -160,28 +162,22 @@
     color: hsl(var(--dark-grayish-blue));
   }
 
-  .navLinks a:hover:after {
+  .navLinks a:after {
     content: "";
     width: 100%;
     height: 0.175em;
     position: absolute;
     left: 0;
-    bottom: calc(-1 * var(--y-padding) - 50%);
+    bottom: calc(-1 * var(--y-padding) - 50% + 0.185em);
+    background-color: transparent;
+  }
+
+  .navLinks a:hover:after {
     background-color: hsl(var(--orange));
   }
 
   .avatar {
     height: 2em;
-  }
-
-  .navLinks {
-    gap: clamp(0.9em, 1vw, 1em);
-    font-size: 1em;
-  }
-
-  .navLinks a:hover:after {
-    height: 0.175em;
-    bottom: calc(-1 * var(--y-padding) - 50% + 0.185em);
   }
 }
 
@@ -203,7 +199,7 @@
     font-size: 1.15em;
   }
 
-  .navLinks a:hover:after {
+  .navLinks a:after {
     height: 0.165em;
     bottom: calc(-1 * var(--y-padding) - 50% + 0.3em);
   }
@@ -218,7 +214,7 @@
     gap: 2em;
   }
 
-  .navLinks a:hover:after {
+  .navLinks a:after {
     height: 0.175em;
     bottom: calc(-1 * var(--y-padding) - 50%);
   }
