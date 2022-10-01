@@ -1,0 +1,143 @@
+/* Normal Styles */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.previewImg {
+  width: 100%;
+  border-radius: 1em;
+}
+
+.previewImg[data-main="true"]:hover {
+  cursor: pointer;
+}
+
+.imgOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.thumbnail {
+  overflow: hidden;
+  position: relative;
+  width: calc((100% - 3em) / 4);
+  aspect-ratio: 1;
+  border: 3px solid transparent;
+  border-radius: 1em;
+}
+
+.thumbnail img {
+  width: 100%;
+  object-position: center;
+}
+
+.thumbnail::after {
+  --blur-clr: transparent;
+
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--blur-clr);
+}
+
+.thumbnail:hover {
+  cursor: pointer;
+}
+
+.thumbnail:hover::after {
+  --blur-clr: hsl(var(--white) / 30%);
+}
+
+.thumbnail.selected {
+  border-color: hsl(var(--orange));
+}
+
+.thumbnail.selected::after {
+  --blur-clr: hsl(var(--white) / 60%);
+}
+
+/* Lightbox Styling */
+.lightbox {
+  display: none;
+}
+
+.lightbox[data-open="true"] {
+  z-index: 1000;
+  display: block;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.lbBackdrop {
+  height: 100%;
+  width: 100%;
+  background-color: hsl(var(--black) / 75%);
+}
+
+.closeSVG {
+  align-self: flex-end;
+  color: hsl(var(--light-grayish-blue));
+}
+
+.closeSVG:hover {
+  cursor: pointer;
+  color: hsl(var(--orange));
+}
+
+.lbPreview {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  max-width: 30em;
+  padding: 1em;
+
+  transform: translate(-50%, -50%);
+}
+
+.lbMainImg {
+  position: relative;
+}
+
+.lbMainImg .previewImg {
+  user-select: none;
+}
+
+/* For the svg buttons */
+.svgContainer {
+  position: absolute;
+  top: 50%;
+
+  height: 2em;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5em;
+
+  color: hsl(var(--black));
+  background-color: hsl(var(--white));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.svgContainer[data-pos="right"] {
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.svgContainer > * {
+  transform: scale(0.75);
+}
+
+.svgContainer:hover {
+  cursor: pointer;
+  color: hsl(var(--orange));
+}

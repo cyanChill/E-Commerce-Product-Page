@@ -1,12 +1,9 @@
 .container {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: max-content auto;
+  grid-template-columns: 100%;
   padding: 1em;
   padding-block-start: 0;
-}
-
-.container > * {
-  flex: 1;
 }
 
 /* Product info container */
@@ -15,6 +12,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 1em;
+  padding-block: 1.5em;
 }
 
 /* Product header */
@@ -28,7 +26,7 @@
 
 .productHeader h1 {
   margin-block: 0.5em 0;
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 /* Descriptin styling */
@@ -71,7 +69,7 @@
 .action {
   user-select: none;
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
   gap: 1em;
 }
 
@@ -93,9 +91,28 @@
 
 @media (min-width: 568px) {
   .container {
-    flex-direction: row;
-    justify-content: space-between;
+    grid-template-rows: initial;
+    grid-template-columns: calc((100% - 4em) / 2);
+    align-items: center;
     gap: 2em;
     padding: 2em;
+  }
+
+  /* Gallery component */
+  .container > :first-child {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  .productInfo {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  .productHeader h1 {
+    font-size: 2.5em;
+  }
+
+  .action {
+    flex-direction: row;
+    align-items: stretch;
   }
 }

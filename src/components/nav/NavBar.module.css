@@ -10,8 +10,9 @@
   gap: 1em;
 
   padding: var(--y-padding) 1em;
-
+  background-color: hsl(var(--white));
   border-bottom: 0.01em solid hsl(var(--grayish-blue));
+  z-index: 100;
 }
 
 /* Menu Control */
@@ -211,6 +212,10 @@
 @media (min-width: 968px) {
   .avatar {
     height: 3.25em;
+  }
+
+  .navLinks {
+    gap: 2em;
   }
 
   .navLinks a:hover:after {

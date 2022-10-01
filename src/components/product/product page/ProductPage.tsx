@@ -28,7 +28,7 @@ const ProductPage = ({ item }: ProductPageInterface) => {
 
   return (
     <div className={styles.container}>
-      <Gallery />
+      <Gallery images={item.productImages} />
 
       <section className={styles.productInfo}>
         <header className={styles.productHeader}>
